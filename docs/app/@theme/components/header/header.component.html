@@ -1,0 +1,18 @@
+<div class="section left">
+  <button *ngIf="sidebarTag" class="sidebar-toggle" (click)="toggleSidebar()">
+    <i class="nb-menu"></i>
+  </button>
+  <div class="logo">
+    <a routerLink="/">iotSmartHome</a>
+  </div>
+</div>
+<div class="section middle">
+  <div class="first-section">
+    <nb-menu [items]="headerMenu"></nb-menu>
+    <ng-content></ng-content>
+  </div>
+</div>
+<div class="section right">
+
+ 
+</div>

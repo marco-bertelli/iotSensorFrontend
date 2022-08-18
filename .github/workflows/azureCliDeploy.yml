@@ -1,0 +1,46 @@
+name: Deploy to demo (azure storage)
+
+on:
+  push:
+    branches:
+      - demo
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - uses: actions/checkout@v2
+        with:
+          ref: demo
+      - name: npm install, build
+        run: |
+          npm install
+          npm run build:demo:prod
+
+      # Azure CLI
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+      # Clear storage
+      - name: Clear blob storage
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob delete-batch -s '$web' --account-name ngxadmin  --debug
+      # Upload to storage
+      - name: Upload to blob storage
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob upload-batch -d '$web' -s dist --account-name ngxadmin  --debug
+
+      # Azure logout
+      - name: logout
+        run: |
+          az logout
+        if: always()
