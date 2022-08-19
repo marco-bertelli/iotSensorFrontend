@@ -127,30 +127,59 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
       })
 
       const point = data.map((point) => point.value)
+      const mergedValues = data.map((point) => {
+        const date = new Date(point.timestamp * 1000);
+        return { time: date.getHours() + ':' + date.getMinutes(), value: point.value };
+      })
 
       dataResult.push({
-        labels: labels,
+        labels: labels || [],
         datasets: {
           label: sensor.name,
           data: point,
-          fill: false,
-          borderColor: 'blue',
+          fill: true,
+          borderColor: sensor.color,
           backgroundColor: 'white',
           borderDash: [5, 5],
           pointRadius: 8,
           pointHoverRadius: 10,
         },
+        mergedValues
       })
 
     })
 
+    let mergedLabels = dataResult.reduce((acc, data) => {
+      if (!_.isEmpty(data.labels)) {
+        acc = _.concat(acc, data.labels);
+      }
+      return acc;
+    }, [])
+
+    mergedLabels = _.sortBy(_.uniq(mergedLabels))
+
 
     const reducedData = dataResult.reduce((acc, data) => {
-      acc.labels = data.labels;
+      acc.labels = mergedLabels;
+
+      const normalizedData = _.map(mergedLabels, (point) => {
+        const pointExist = _.find(data.mergedValues, { time: point })
+
+        if (pointExist) {
+          return pointExist.value
+        }
+
+        return null;
+      })
+
+      data.datasets.data = normalizedData
+
       acc.datasets.push(data.datasets)
       return acc
 
     }, { labels: [], datasets: [] })
+
+    console.log(reducedData)
 
     this.data = reducedData;
   }
