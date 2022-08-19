@@ -123,13 +123,17 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
 
       const labels = data.map((point) => {
         const date = new Date(point.timestamp * 1000);
-        return date.getHours() + ':' + date.getMinutes();
+        const minutes = date.getMinutes()
+
+        return date.getHours() + ':' + (minutes < 10 ? '0' + minutes : minutes);
       })
 
       const point = data.map((point) => point.value)
+
       const mergedValues = data.map((point) => {
         const date = new Date(point.timestamp * 1000);
-        return { time: date.getHours() + ':' + date.getMinutes(), value: point.value };
+        const minutes = date.getMinutes()
+        return { time: date.getHours() + ':' + (minutes < 10 ? '0' + minutes : minutes), value: point.value };
       })
 
       dataResult.push({
@@ -137,7 +141,7 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
         datasets: {
           label: sensor.name,
           data: point,
-          fill: true,
+          fill: false,
           borderColor: sensor.color,
           backgroundColor: 'white',
           borderDash: [5, 5],
@@ -156,7 +160,7 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
       return acc;
     }, [])
 
-    mergedLabels = _.sortBy(_.uniq(mergedLabels))
+    mergedLabels = _.sortBy(_.uniq(mergedLabels),)
 
 
     const reducedData = dataResult.reduce((acc, data) => {

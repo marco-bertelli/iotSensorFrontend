@@ -53,7 +53,7 @@ export class RoomSelectorComponent implements OnInit, OnDestroy {
       {
         id: '2',
         name: { text: 'Living Room', x: 468, y: 134 },
-        sensorName: { text: 'Sensor 1', x: 145, y: 240.8 },
+        sensorName: { text: 'esp32_9D96C4', x: 145, y: 240.8 },
         area: { d: 'M358.8,160V49.82a6.09,6.09,0,0,1,6.09-6.09H570.78a6.09,6.09,0,0,1,6.09,6.09V218.9a6.09' +
           ',6.09,0,0,1-6.09,6.09h-212Z' },
         border: { d: 'M358.8,160V49.82a6.09,6.09,0,0,1,6.09-6.09H570.78a6.09,6.09,0,0,1,6.09,6.09V218.9a6.09' +
@@ -62,7 +62,7 @@ export class RoomSelectorComponent implements OnInit, OnDestroy {
       {
         id: '3',
         name: { text: 'Hallway', x: 320, y: 273 },
-        sensorName: { text: 'Sensor 1', x: 145, y: 240.8 },
+        sensorName: { text: '', x: 145, y: 240.8 },
         area: { d: 'M216.37,354V92.5H358.8V225H424.39V319H272.71V354Z' },
         border: { d: 'M216.37,225V356 M216.21,162V92.5H358.8V160 M358.8,225H424.39V312.91a6.09,' +
           '6.09,0,0,1,-6.09,6.09H272.71V356' },
