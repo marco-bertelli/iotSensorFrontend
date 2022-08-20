@@ -11,15 +11,16 @@ declare const echarts: any;
     <nb-card size="tiny" class="solar-card">
       <nb-card-header>Average Temperature</nb-card-header>
       <nb-card-body>
-        <div echarts [options]="option" class="echart">
-        </div>
+        
+      Average Temp: {{value}} C
+      
       </nb-card-body>
     </nb-card>
   `,
 })
 export class TemperatureGraphComponent implements OnDestroy {
 
-  private value = 0;
+  value = 0;
 
   @Input('chartValue')
   set chartValue(value: number) {
