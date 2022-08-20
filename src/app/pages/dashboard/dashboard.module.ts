@@ -34,6 +34,7 @@ import { TemperaturesComponent } from './temperatures/temperatures.component';
 import { ChartjsMultipleXaxisComponent } from './temperatures/electricity-chart/chartjs-multiple-xaxis.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartModule } from 'angular2-chartjs';
+import { TemperatureGraphComponent } from './temparature-graph/solar.component';
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import { ChartModule } from 'angular2-chartjs';
     SecurityCamerasComponent,
     ElectricityComponent,
     ElectricityChartComponent,
+    TemperatureGraphComponent,
     WeatherComponent,
     PlayerComponent,
     SolarComponent,

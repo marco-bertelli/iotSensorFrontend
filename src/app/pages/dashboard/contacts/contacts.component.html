@@ -1,11 +1,10 @@
 <nb-card size="giant">
   <nb-tabset fullWidth>
 
-    <nb-tab tabTitle="Alarm">
+    <nb-tab tabTitle="Active Alarm">
       <nb-list>
-        <nb-list-item matRipple class="contact" *ngFor="let c of contacts">
-          <nb-user [picture]="" [name]="c.user.name" [title]="c.type" size="large"></nb-user>
-          <nb-icon icon="phone-outline" pack="eva"></nb-icon>
+        <nb-list-item matRipple class="contact" *ngFor="let c of alarms">
+          <nb-user [picture]="" [name]="c.name" [title]="c.type" size="large"></nb-user>
         </nb-list-item>
       </nb-list>
     </nb-tab>

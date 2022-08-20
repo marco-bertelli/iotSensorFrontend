@@ -1,32 +1,23 @@
 import { Component, OnDestroy } from '@angular/core';
-import { takeWhile } from 'rxjs/operators';
-import { forkJoin } from 'rxjs';
-
-import { Contacts, RecentUsers, UserData } from '../../../@core/data/users';
+import axios from 'axios';
 
 @Component({
   selector: 'ngx-contacts',
   styleUrls: ['./contacts.component.scss'],
   templateUrl: './contacts.component.html',
 })
-export class ContactsComponent implements OnDestroy {
+export class ContactsComponent {
 
-  private alive = true;
-
-  contacts: any[];
+  alarms: any[];
   recent: any[];
 
-  constructor(private userService: UserData) {
-    forkJoin(
-      this.userService.getContacts(),
-    )
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(([contacts]: [Contacts[]]) => {
-        this.contacts = contacts;
-      });
-  }
+  constructor() {}
 
-  ngOnDestroy() {
-    this.alive = false;
+  async ngOnInit() {
+    const result = await axios.get('https://iot-sensor-backend.herokuapp.com/alarms/active');
+
+    console.log(result.data);
+
+    this.alarms = result.data;
   }
 }
