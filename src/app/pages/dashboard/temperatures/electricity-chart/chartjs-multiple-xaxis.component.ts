@@ -79,41 +79,6 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
     });
   }
 
-  // async ngOnInit() {
-  //   const dataResult = []
-
-  //   await BluePromise.map(this.sensors, async (sensor) => {
-  //     const result = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/'+sensor._id+'/lasthour');
-  //     const data = result.data;
-
-  //     const labels = data.map((point) => {
-  //       const date = new Date(point.timestamp * 1000);
-  //       return date.getHours() + ':' + date.getMinutes();
-  //     })
-
-  //     const point = data.map((point) => point.value)
-
-  //     dataResult.push ( {
-  //       labels: labels,
-  //       datasets: [{
-  //         label: 'sensor data',
-  //         data: point,
-  //         fill: false,
-  //         borderColor: 'blue',
-  //         backgroundColor: 'white',
-  //         borderDash: [5, 5],
-  //         pointRadius: 8,
-  //         pointHoverRadius: 10,
-  //       }],
-  //     })
-
-  //   })
-
-  //   this.data = dataResult;
-
-  //   console.log(this.data)
-  // }
-
   async ngOnChanges() {
     const dataResult = []
 

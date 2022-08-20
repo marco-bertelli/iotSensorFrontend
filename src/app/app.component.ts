@@ -35,7 +35,8 @@ export class AppComponent implements OnInit {
           this.themeService.changeTheme(params.theme);
           this.currentThemeService.setCurrentTheme(params.theme);
         } else {
-          this.themeService.changeTheme(this.currentThemeService.getCurrentTheme());
+          this.themeService.changeTheme('corporate');
+          this.currentThemeService.setCurrentTheme('corporate');
         }
       });
   }

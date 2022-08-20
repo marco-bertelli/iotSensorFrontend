@@ -71,10 +71,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe(() => this.showCallAction = false);
 
     setInterval(async () => {
-      const humidityResult = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/humidity/' + this.interval)
-      this.solarValue = humidityResult.data.humidityAverage;
+      const humidityResult = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/humidity/' + (this.interval || 1))
+      this.solarValue = humidityResult.data.humidityAverage || 0;
       console.log(this.solarValue)
-    }, 4000);
+    }, 5000);
   }
 
   ngOnDestroy() {

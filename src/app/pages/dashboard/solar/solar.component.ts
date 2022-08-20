@@ -17,7 +17,7 @@ declare const echarts: any;
     </nb-card>
   `,
 })
-export class SolarComponent implements AfterViewInit, OnDestroy {
+export class SolarComponent implements OnDestroy {
 
   private value = 0;
 
@@ -38,143 +38,6 @@ export class SolarComponent implements AfterViewInit, OnDestroy {
   constructor(private theme: NbThemeService) {
   }
 
-  ngAfterViewInit() {
-    this.themeSubscription = this.theme.getJsTheme().pipe(delay(1)).subscribe(config => {
-
-      const solarTheme: any = config.variables.solar;
-
-      this.option = Object.assign({}, {
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)',
-        },
-        series: [
-          {
-            name: ' ',
-            clockWise: true,
-            hoverAnimation: false,
-            type: 'pie',
-            center: ['45%', '50%'],
-            radius: solarTheme.radius,
-            data: [
-              {
-                value: this.value,
-                name: ' ',
-                label: {
-                  normal: {
-                    position: 'center',
-                    formatter: '{d}%',
-                    textStyle: {
-                      fontSize: '22',
-                      fontFamily: config.variables.fontSecondary,
-                      fontWeight: '600',
-                      color: config.variables.fgHeading,
-                    },
-                  },
-                },
-                tooltip: {
-                  show: false,
-                },
-                itemStyle: {
-                  normal: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                      {
-                        offset: 0,
-                        color: solarTheme.gradientLeft,
-                      },
-                      {
-                        offset: 1,
-                        color: solarTheme.gradientRight,
-                      },
-                    ]),
-                    shadowColor: solarTheme.shadowColor,
-                    shadowBlur: 0,
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 3,
-                  },
-                },
-                hoverAnimation: false,
-              },
-              {
-                value: 100 - this.value,
-                name: ' ',
-                tooltip: {
-                  show: false,
-                },
-                label: {
-                  normal: {
-                    position: 'inner',
-                  },
-                },
-                itemStyle: {
-                  normal: {
-                    color: solarTheme.secondSeriesFill,
-                  },
-                },
-              },
-            ],
-          },
-          {
-            name: ' ',
-            clockWise: true,
-            hoverAnimation: false,
-            type: 'pie',
-            center: ['45%', '50%'],
-            radius: solarTheme.radius,
-            data: [
-              {
-                value: this.value,
-                name: ' ',
-                label: {
-                  normal: {
-                    position: 'inner',
-                    show: false,
-                  },
-                },
-                tooltip: {
-                  show: false,
-                },
-                itemStyle: {
-                  normal: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                      {
-                        offset: 0,
-                        color: solarTheme.gradientLeft,
-                      },
-                      {
-                        offset: 1,
-                        color: solarTheme.gradientRight,
-                      },
-                    ]),
-                    shadowColor: solarTheme.shadowColor,
-                    shadowBlur: 7,
-                  },
-                },
-                hoverAnimation: false,
-              },
-              {
-                value: 28,
-                name: ' ',
-                tooltip: {
-                  show: false,
-                },
-                label: {
-                  normal: {
-                    position: 'inner',
-                  },
-                },
-                itemStyle: {
-                  normal: {
-                    color: 'none',
-                  },
-                },
-              },
-            ],
-          },
-        ],
-      });
-    });
-  }
 
   ngOnChanges() {
     this.themeSubscription = this.theme.getJsTheme().pipe(delay(1)).subscribe(config => {
@@ -192,7 +55,7 @@ export class SolarComponent implements AfterViewInit, OnDestroy {
             clockWise: true,
             hoverAnimation: false,
             type: 'pie',
-            center: ['45%', '50%'],
+            center: [ '45%', '50%'],
             radius: solarTheme.radius,
             data: [
               {
@@ -291,7 +154,7 @@ export class SolarComponent implements AfterViewInit, OnDestroy {
                 hoverAnimation: false,
               },
               {
-                value: 28,
+                value: 100 - this.value,
                 name: ' ',
                 tooltip: {
                   show: false,
