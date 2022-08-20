@@ -123,17 +123,27 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
 
       const labels = data.map((point) => {
         const date = new Date(point.timestamp * 1000);
-        const minutes = date.getMinutes()
 
-        return date.getHours() + ':' + (minutes < 10 ? '0' + minutes : minutes);
+        const minutes = date.getMinutes()
+        const calculatedMinutes = minutes < 10 ? '0' + minutes : minutes
+
+        const hours = date.getHours()
+        const calculatedHours = hours < 10 ? '0' + hours : hours
+
+        return calculatedHours + ':' + calculatedMinutes;
       })
 
       const point = data.map((point) => point.value)
 
       const mergedValues = data.map((point) => {
         const date = new Date(point.timestamp * 1000);
+
         const minutes = date.getMinutes()
-        return { time: date.getHours() + ':' + (minutes < 10 ? '0' + minutes : minutes), value: point.value };
+        const calculatedMinutes = minutes < 10 ? '0' + minutes : minutes
+
+        const hours = date.getHours()
+        const calculatedHours = hours < 10 ? '0' + hours : hours
+        return { time: calculatedHours + ':' + calculatedMinutes, value: point.value };
       })
 
       dataResult.push({
@@ -182,8 +192,6 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
       return acc
 
     }, { labels: [], datasets: [] })
-
-    console.log(reducedData)
 
     this.data = reducedData;
   }

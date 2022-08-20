@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   activeSensors = [];
 
-  solarValue: number;
+  solarValue: number = 0;
   interval: string;
 
   statusCards: string;
@@ -69,17 +69,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.abService.onAbEvent(AbService.VARIANT_HIDE_CALL_ACTION)
       .pipe(takeWhile(() => this.alive))
       .subscribe(() => this.showCallAction = false);
+
+    setInterval(async () => {
+      const humidityResult = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/humidity/' + this.interval)
+      this.solarValue = humidityResult.data.humidityAverage;
+      console.log(this.solarValue)
+    }, 4000);
   }
 
   ngOnDestroy() {
     this.alive = false;
   }
 
-  ngOnChanges() {
-    console.log(this.interval)
-  }
-
-  addItem(event: any){
+  addItem(event: any) {
     const sensorIndex = _.findIndex(this.sensors, sensor => sensor.name === event.title);
 
     this.sensors[sensorIndex].status = event.status;
