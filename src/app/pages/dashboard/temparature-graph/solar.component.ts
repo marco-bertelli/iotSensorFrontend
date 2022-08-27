@@ -12,7 +12,7 @@ declare const echarts: any;
       <nb-card-header>Average Temperature</nb-card-header>
       <nb-card-body>
         
-      Average Temp: {{value}} C
+      {{value}} C <i class="fa fa-thermometer-half" aria-hidden="true"></i>
       
       </nb-card-body>
     </nb-card>

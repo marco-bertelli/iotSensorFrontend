@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   activeSensors = [];
 
   solarValue: number = 0;
+  tempValue: string ;
   interval: string;
 
   statusCards: string;
@@ -73,7 +74,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     setInterval(async () => {
       const humidityResult = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/humidity/' + (this.interval || 1))
       this.solarValue = humidityResult.data.humidityAverage || 0;
-      console.log(this.solarValue)
+
+      const tempResult = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/temperature/' + (this.interval || 1))
+      this.tempValue = (Number(tempResult.data.tempAverage["$numberDecimal"]) || 0).toFixed(2);
+ 
     }, 5000);
   }
 
