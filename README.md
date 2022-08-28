@@ -112,18 +112,17 @@ and after with redis 200 ms. redis cache also help a **lot** to decrease the num
 
 ### Prerequisites
 
-- Node - v16 or higher
+- Node - v14
 - NPM - v7.10.0
 - Docker - v19.03.13 (optional)
+- Angular CLI installed globaly
 
 ### Local installation
 
-* use node 16
+* use node 14
 * npm i
-* npm run dev
+* ng serve
 
-** for production tests **
-* npm run start
 
 ## Deployment
 
