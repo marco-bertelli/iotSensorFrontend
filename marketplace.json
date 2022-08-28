@@ -1,0 +1,23 @@
+{
+    "app_name": "SmartHome",  //Name of the app
+    "description": "real time data from your home with redis speed!", // One line description
+    "hidden": false, // Can be "true" or "false". If true, this app won't show up in Launchpad.
+    "rank": 21, // This is used to sort the apps in the marketplace. 1 to 20 are reserved. Enter greater than 20
+    "type": "Building Block", //Can be "Building Block" or "Full App"
+    "contributed_by": "Community", // Can be "Redis Labs" or "Community" or "Partner"
+    "repo_url": "https://github.com/marco-bertelli/iotSensorBackend", //This is the Gitub Repo's URL.
+    "download_url": "https://github.com/marco-bertelli/iotSensorBackend",
+    "hosted_url": "https://iot-sensor-frontend-git-master-marco-bertelli.vercel.app/pages/iot-dashboard", //The URL of the app. if you are hosting this app somewhere
+    "quick_deploy": "false", //"true" if the project has Heroku, Vercel, Google deploy buttons
+    "language": ["JavaScript"], // Backend technologies: "JavaScript", "Java", "Python", "Go", "C#", "Ruby", "PHP", etc. 
+    "redis_commands": ["SETEX"], // Enter all the Redis commands
+    "redis_features": ["caching", "JSON"],// Enter any core Redis feature or leave it blank.
+    "redis_modules": ["RediJSON", "RediSearch"], //Value can be one or more of "RediJSON", "RediSearch", "RedisTimeseries", "RedisAI"  "RedisGears" or "RedisGraph" listed in an array. 
+    "app_image_urls": [
+        "https://github.com/marco-bertelli/iotSensorBackend/blob/master/assets/baseGraph.gif"
+    ], // Provide any image urls in an array.
+    "youtube_url": "https://www.youtube.com/watch?v=0IFBh0KPuxA", //Provide a Youtube link to your app's video
+    "special_tags": ["Hackathon"], // "Hackathon", "Paid", or any event names.
+    "verticals": ["Iot"], // Can be: "Healthcare", "Financial", "Tourism", "Retail", "Oil & Gas", "Manufacturing", "Technology","Education", "Construction"  
+    "markdown": "https://github.com/marco-bertelli/iotSensorBackend/blob/master/README.md" // Link to the RAW Markdown.
+}
