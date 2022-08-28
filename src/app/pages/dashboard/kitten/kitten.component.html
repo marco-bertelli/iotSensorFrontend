@@ -2,9 +2,9 @@
   <div class="picture" style.background-image="url('assets/images/kitten-{{currentTheme}}.png')"></div>
 
   <div class="details">
-    <div class="h4">Why Smart House ?</div>
+    <div class="h4">Predicted temperature!</div>
     <div class="description">
-      Increased energy efficiency. Depending on how you use your smart-home technology, it’s possible to make your space more energy-efficient. For example, you can have more precise control over the heating and cooling of your home with a programmable smart thermostat that learns your schedule and temperature preferences, and then suggests the best energy efficient settings throughout the day
+      the temperature predicted for the next hour is {{(value["0"]).toFixed(2)}} C
     </div>
   </div>
 </nb-card>
