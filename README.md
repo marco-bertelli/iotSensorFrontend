@@ -1,92 +1,135 @@
-# ngx-admin [<img src="https://i.imgur.com/oMcxwZ0.png" alt="Eva Design System" height="20px" />](https://eva.design?utm_campaign=eva_design%20-%20home%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=top_status_tile) [![Build Status](https://travis-ci.org/akveo/ngx-admin.svg?branch=master)](https://travis-ci.org/akveo/ngx-admin)
+# SmartHome
 
-[Who uses ngx-admin?](https://github.com/akveo/ngx-admin/issues/1645)| [Documentation](https://akveo.github.io/ngx-admin?utm_campaign=ngx_admin%20-%20home%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=github_readme_documentation_link) | [Installation Guidelines](https://akveo.github.io/ngx-admin/docs/getting-started/what-is-ngxadmin?utm_campaign=ngx_admin%20-%20home%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=github_readme_installation_guidelines) | [Angular templates](https://www.akveo.com/templates?utm_campaign=services%20-%20github%20-%20templates&utm_source=ngx_admin&utm_medium=referral&utm_content=github%20readme%20top%20angular%20templates%20link)
+this is a project that get real time temperature and humidity data from esp32 with DHT22 AM2302 temperature sensor. after this the data
+is stored in both redis and MongoDb and processed from the frontend (see the other repo for more frontend info)
 
-# New! Material theme for ngx-admin
+[![Embed your YouTube video](./assets/baseGraph.gif)](./assets/baseGraph.gif)
 
-Material admin theme is based on the most popular Angular dashboard template - [ngx-admin](https://akveo.github.io/ngx-admin?utm_campaign=ngx_admin%20-%20home%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin_material&utm_medium=referral&utm_content=github_readme)
-To use material theme checkout `feat/material-theme` branch.
+[![Embed your YouTube video](./assets/customColor.gif)](./assets/customColor.gif)
 
-Get material ngx-admin integrated with backend technology of your choice. [Check out our store](https://store.akveo.com/pages/all-collections?utm_campaign=akveo_store%20-%20all%20bundles%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral%20&utm_content=check_out_our_store).
+[![Embed your YouTube video](./assets/map.png)](./assets/map.png)
 
-## Key features
+[![Embed your YouTube video](./assets/footer.png)](./assets/footer.png)
 
-- The most popular and trusted Angular open source dashboard template is out there. Used by hundreds of thousands developers worldwide and Fortune 500 companies*.
-- Over 40+ Angular Components and 60+ Usage Examples. Kick off your project and save money by using ngx-admin.
-- Already using ngx-admin and willing to switch to material theme? Material theme is backward-compatible. Check out the article describing how to do that.
-- ngx-admin material works perfectly with Angular Material and Nebular. Take the best from both!
+# Overview video
 
-### To use material theme checkout `feat/material-theme` branch
+Here's a short video that explains the project and how it uses Redis:
 
-# Admin template based on Angular 10+ and <a href="https://github.com/akveo/nebular">Nebular</a>
-<a target="_blank" href="https://akveo.com/ngx-admin/pages/dashboard?theme=corporate&utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=hero_banner_corporate"><img src="https://i.imgur.com/mFdqvgG.png"/></a>
+[![Embed your YouTube video](./assets/map.png)](https://www.youtube.com/watch?v=0IFBh0KPuxA)
 
-### UI Bakery
-Try low-code internal tool builder for free
-<a href="https://uibakery.io/?utm_source=github&utm_medium=clicks&utm_campaign=banner"><img src="https://user-images.githubusercontent.com/6151971/125071660-41f84900-e0c2-11eb-882a-0c675eb1e5e3.png"></a>
+## How it works
+before start is important to understand the app architecture:
 
-[Check out our Store](https://store.akveo.com/pages/all-collections?utm_campaign=akveo_store%20-%20all%20bundles%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral%20&utm_content=check_out_our_store) for ready to use Backend Bundles.
+[![Embed your YouTube video](./assets/architecture.png)](./assets/architecture.png)
 
-### Free Bundles
-<a href="https://www.akveo.com/templates/fleet-management-dashboard?utm_campaign=services%20[…]x-admin%20&utm_medium=referral%20&utm_content=github_banner%20"><img src="https://i.imgur.com/TPLX3Xx.png"></a>
+as we can see there are many different parts:
+* Backend: write using node js and TS, handle the redis integration using redis OM, MongoDb integration, Aws Iot real time MQTT connection
+and Tensorflow js model utilization. Use redis for reading the real time sensor messagges over the MQTT channel "machines" and try to find a sensor associated with it,
+if found insert a datalog of the received data in both MongoDb and redis for rapid real time data into the frontend graph.
+the alarm logic is associated to the datalogs, if when a datalog is created trigger an alarm rule an active alarm is created and will be closed only when an alarm below the trashold arrive, all the alarms are stored and not deleted.
+Tensorflow is used to read a very simple regression model and use it for the next hour predictions.
 
+* Frontend: retrive the data from the backend API to make a graph based on a custom range time, in the graph you can choose the sensor who data you want to see,
+there is also the average temperature and humidity cards in the bottom of the dashboard that show you the Average in the **selected range**. 
+the alrams are real time and retrived with only 1 minute cache to don't lose the new alarms, as explained before the alrams are created only when a value trigger an alarm trashold.
+there is also a home map to see the sensors disposition and have an idea of the space, the "SUN" card show you the **actual** values and not the average.
+the last card show you the prediction fo the next hour.
+All the components support the **multi theme** feature to personalize the user experience.
 
-### With 6 stunning visual themes
+* Sensors: send real time temperature and humidity data every 5 minutes, integrated with Aws-Iot. this sensor are made using Mongoose Os, a really cool it framework that help to increase speed using simil JS code. for the code see the Firmware repo
 
-| <a target="_blank" href="https://www.akveo.com/ngx-admin/pages/dashboard?theme=material-dark&utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20docs&utm_source=ngx_admin&utm_medium=referral&utm_content=ngx_admin_material_themes_material_dark"><img src="https://i.imgur.com/67YAlhf.png"/></a> | <a target="_blank" href="https://www.akveo.com/ngx-admin/pages/dashboard?theme=material-light&utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20docs&utm_source=ngx_admin&utm_medium=referral&utm_content=ngx_admin_material_themes_material_light"><img src="https://i.imgur.com/aQzw0hD.png"/></a> |
-| --- | --- |
-|  Material Dark | Material Light |
+* Redis: used to store the cache and the partial datalogs data to speed up the responses time and keep retrive graphic data simple.
 
-| <a target="_blank" href="https://www.akveo.com/ngx-admin/pages/dashboard?theme=dark&utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=github_readme_theme_dark"><img src="https://i.imgur.com/9UkTGgr.png"/></a> | <a target="_blank" href="https://akveo.com/ngx-admin/pages/dashboard?theme=default&utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=github_readme_theme_default"><img src="https://i.imgur.com/Kn3xDKQ.png"/></a> |
-| --- | --- |
-|  Dark| Default |
+* MongoDb: used to store all other data like sensor and alarms
 
-| <a target="_blank" href="https://www.akveo.com/ngx-admin/pages/dashboard?theme=cosmic&utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=github_readme_theme_cosmic"><img src="https://i.imgur.com/iJu2YDF.png"/></a> | <a target="_blank" href="https://www.akveo.com/ngx-admin/pages/dashboard?theme=corporate&utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=github_readme_theme_corporate"><img src="https://i.imgur.com/GpUt6NW.png"/></a> |
-| --- | --- |
-| Cosmic  | Corporate |
+### How the data is stored:
 
-### What's included:
+* basic models.
+    * alarms:
+        * sensorId: id of the sonsor
+        * ruleId: if generated by a rule the ruleId
+        * rule: for rules type alram the rule logic
+        * name: name to show of the alram
+        * type:  enum: ['active', 'finish', 'rule'],
+        * triggerValue: start alarm value
+        * detriggerValue: end alarm value
+        * startDate
+        * finishDate
+        
+    * datalogs:
+        * sensorId: id of the sonsor
+        * value: temp value
+        * measureUnit: at this time only C
+        * timestamp: time of the recorded value
+        * humidity: stored only in **MongoDb** to keep redis more clean and fast for graph data
+        
+    * sensors:
+        * code
+        * type: for now only temperature type
+        * name
+        * color: the color to show into the graph
 
-- Angular 10+ & Typescript
-- Bootstrap 4+ & SCSS
-- Responsive layout
-- RTL support
-- High resolution
-- Flexibly configurable themes with **hot-reload** (3 themes included)
-- Authentication module with multiple providers
-- 40+ Angular Components
-- 60+ Usage Examples
+the most cool part of the data is the alram logic:
+```
+{
+    "_id" : ObjectId("6300e639830e983ff546f7af"),
+    "sensorId" : ObjectId("62fce2bc830e983ff546f775"),
+    "rule" : {
+        ">" : [
+            {
+                "var" : "temp"
+            },
+            25.0
+        ]
+    },
+    "name" : "Bedroom High Temperature",
+    "type" : "rule"
+}
+```
 
-### Demo
+as we can see the logic is saved direct into the alarm! this is possible for the JSON Logic NPM library. (this alarm start if sensor XXX go up to 25 degree)
 
-<a target="_blank" href="http://www.akveo.com/ngx-admin/?utm_campaign=ngx_admin%20-%20demo%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=live_demo_link">Live Demo</a>
+### How the data is accessed:
 
-## Documentation
-This template is using [Nebular](https://github.com/akveo/nebular) modules set, [here you can find documentation and other useful articles](https://akveo.github.io/nebular/docs/guides/install-based-on-starter-kit?utm_campaign=nebular%20-%20docs%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=documentation_useful_articles).
+Basic endpoints: 
+* datalogs/: 
+    - /predict: predict the next hour data, using redis cache to keep it for 15 minutes
+    - /ambient/now: actual data
+    - /:sensorId/:interval: get datalogs of a sensor use redis JSON and redis Search!
+    - /ambient/humidity/:interval: Average humidity
+    - /ambient/temperature/:interval: Average temp
+* alarms/:
+    - /active: get active alrams, use redis cache to store it for 1 minutes
+    - /finished: get finished alarms: use redis cache to keep it for 3 minutes
+* sensors/: get the sensor list, use redis cache to keep it for 30 minutes
 
-### Empty starter kit
-Don't need all the pages and modules and just looking for an empty starter kit for your next project? Check out our [starter-kit branch](https://github.com/akveo/ngx-admin/tree/starter-kit).
+### Performance Benchmarks
 
-## BrowserStack
-This project runs its tests on multiple desktop and mobile browsers using [BrowserStack](http://www.browserstack.com).
+i don't migrate my app, but before using redis i have made some tries and using Mongo for get the sensor datalogs for an interval it took 300 ms,
+and after with redis 200 ms. redis cache also help a **lot** to decrease the number of heavy call (like the prediction call) caching the results.
 
-<img src="https://cloud.githubusercontent.com/assets/131406/22254249/534d889e-e254-11e6-8427-a759fb23b7bd.png" height="40" />
+## How to run it locally?
 
-## More from Akveo
+### Prerequisites
 
-- [Eva Icons](https://github.com/akveo/eva-icons) - 480+ beautiful Open Source icons
-- [Nebular](https://github.com/akveo/nebular) - Angular Components, Auth and Security
-- [Akveo templates](https://www.akveo.com/templates?utm_campaign=services%20-%20github%20-%20templates&utm_source=ngx_admin&utm_medium=referral&utm_content=ngx_admin%20github%20readme%20more%20from%20akveo%20link) - 10+ Ready-to-use apps templates to speed up your apps developments
+- Node - v16 or higher
+- NPM - v7.10.0
+- Docker - v19.03.13 (optional)
 
-### How can I support developers?
-- Star our GitHub repo :star:
-- Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
-- Follow us on [Twitter](https://twitter.com/akveo_inc) :feet:
-- Like our page on [Facebook](https://www.facebook.com/akveo/) :thumbsup:
+### Local installation
 
-### Looking for engineering services? 
-Visit [our homepage](https://www.akveo.com?utm_campaign=services%20-%20akveo%20website%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=looking_for_engineering_services_visit_homepage) or simply leave us a message to [contact@akveo.com](mailto:contact@akveo.com). We will be happy to work with you!
+* use node 16
+* npm i
+* npm run dev
 
-### From Developers
-Made with :heart: by [Akveo team](https://www.akveo.com?utm_campaign=services%20-%20akveo%20website%20-%20ngx_admin%20github%20readme&utm_source=ngx_admin&utm_medium=referral&utm_content=from_developers_made_by). Follow us on [Twitter](https://twitter.com/akveo_inc) to get the latest news first!
-We're always happy to receive your feedback!
+** for production tests **
+* npm run start
+
+## Deployment
+
+used github actions to deploy a docker image on heroku
+
+## For more tecnical info read the dev article here!
+
+[article](https://dev.to/marcobertelli/smarthome-your-home-data-in-real-time-2jjd)
+
