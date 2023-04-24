@@ -14,7 +14,7 @@ export class ContactsComponent {
   constructor() {}
 
   async ngOnInit() {
-    const result = await axios.get('https://iot-sensor-backend.herokuapp.com/alarms/active');
+    const result = await axios.get('https://iot-smart-box.herokuapp.com/alarms/active');
 
     console.log(result.data);
 

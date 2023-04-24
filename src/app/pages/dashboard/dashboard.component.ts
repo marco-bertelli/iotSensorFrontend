@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.metaDataService.updateTitle('Iot Dashboard');
     this.metaDataService.updateKeywords('iot dashboard');
 
-    const result = await axios.get('https://iot-sensor-backend.herokuapp.com/sensors')
+    const result = await axios.get('https://iot-smart-box.herokuapp.com/sensors')
     const sensors = result.data;
 
     this.sensors = sensors.map(sensor => {
@@ -72,10 +72,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe(() => this.showCallAction = false);
 
     setInterval(async () => {
-      const humidityResult = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/humidity/' + (this.interval || 1))
+      const humidityResult = await axios.get('https://iot-smart-box.herokuapp.com/datalogs/ambient/humidity/' + (this.interval || 1))
       this.solarValue = humidityResult.data.humidityAverage || 0;
 
-      const tempResult = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/temperature/' + (this.interval || 1))
+      const tempResult = await axios.get('https://iot-smart-box.herokuapp.com/datalogs/ambient/temperature/' + (this.interval || 1))
       this.tempValue = (Number(tempResult.data.tempAverage["$numberDecimal"]) || 0).toFixed(2);
  
     }, 5000);

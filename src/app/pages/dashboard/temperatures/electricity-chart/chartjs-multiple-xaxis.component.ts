@@ -83,7 +83,7 @@ export class ChartjsMultipleXaxisComponent implements OnDestroy {
     const dataResult = []
 
     await BluePromise.map(this.sensors, async (sensor) => {
-      const result = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/' + sensor._id + '/' + this.interval);
+      const result = await axios.get('https://iot-smart-box.herokuapp.com/datalogs/' + sensor._id + '/' + this.interval);
       const data = result.data;
 
       const labels = data.map((point) => {

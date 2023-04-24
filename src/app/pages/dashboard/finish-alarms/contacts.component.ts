@@ -14,7 +14,7 @@ export class AlarmComponent {
   constructor() {}
 
   async ngOnInit() {
-    const result = await axios.get('https://iot-sensor-backend.herokuapp.com/alarms/finished');
+    const result = await axios.get('https://iot-smart-box.herokuapp.com/alarms/finished');
 
     console.log(result.data);
 

@@ -24,7 +24,7 @@ export class KittenComponent implements OnDestroy {
   }
 
   async ngOnInit() {
-    const result = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/predict');
+    const result = await axios.get('https://iot-smart-box.herokuapp.com/datalogs/predict');
 
     
     this.value = result.data;

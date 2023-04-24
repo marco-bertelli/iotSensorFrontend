@@ -18,7 +18,7 @@ export class WeatherComponent {
   }
 
   async ngOnInit() {
-    const result = await axios.get('https://iot-sensor-backend.herokuapp.com/datalogs/ambient/now')
+    const result = await axios.get('https://iot-smart-box.herokuapp.com/datalogs/ambient/now')
 
     this.actualData = result.data
   }
